@@ -34,7 +34,7 @@ opened_from_qr = st.query_params.get("src") == "qr"
 
 
 # ============================================================
-# PAGE STYLE
+# PAGE STYLE  (Orange / Black / Silver theme)
 # ============================================================
 
 st.markdown(
@@ -49,21 +49,39 @@ header {
     visibility: hidden;
 }
 
-/* Hide "Press Enter to submit form" hint */
 div[data-testid="InputInstructions"] {
     display: none;
 }
 
 
-/* ---------- Page ---------- */
+/* ---------- Page background: black -> silver ---------- */
 
 .stApp {
-    background-color: #f5f7fb;
+    background: linear-gradient(
+        160deg,
+        #000000 0%,
+        #141414 35%,
+        #2b2d31 65%,
+        #8e9196 100%
+    ) !important;
+    background-attachment: fixed !important;
+}
+
+/* Orange accent bar at the top */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #ff5f00, #ff9f1c, #ffd089, #ff9f1c, #ff5f00);
+    z-index: 1000;
 }
 
 .block-container {
     max-width: 520px;
-    padding-top: 2rem;
+    padding-top: 2.5rem;
     padding-bottom: 2rem;
 }
 
@@ -72,29 +90,39 @@ div[data-testid="InputInstructions"] {
 
 .main-title {
     text-align: center;
-    font-size: 34px;
-    font-weight: 800;
-    color: #172033;
-    letter-spacing: 0.5px;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 1px;
     margin-bottom: 6px;
+    background: linear-gradient(90deg, #ff6a00, #ffb347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .subtitle {
     text-align: center;
-    color: #667085;
+    color: #c0c4cc;
     font-size: 16px;
     margin-bottom: 24px;
 }
 
 
-/* ---------- Shared card look (QR card + form) ---------- */
+/* ---------- Shared silver card (QR card + form) ---------- */
 
 .qr-card,
 div[data-testid="stForm"] {
-    background-color: #ffffff;
-    border: 1px solid #e4e7ec !important;
+    background: linear-gradient(
+        145deg,
+        #f4f5f7 0%,
+        #dcdfe4 50%,
+        #b9bdc4 100%
+    ) !important;
+    border: 2px solid #ff7a00 !important;
     border-radius: 20px !important;
-    box-shadow: 0 4px 16px rgba(16, 24, 40, 0.06);
+    box-shadow:
+        0 8px 24px rgba(255, 122, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     padding: 24px !important;
 }
 
@@ -111,17 +139,22 @@ div[data-testid="stForm"] {
     height: auto;
     display: block;
     margin: 0 auto;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 3px solid #111111;
+    border-radius: 14px;
 }
 
 .qr-title {
     font-size: 18px;
-    font-weight: 800;
-    color: #344054;
-    margin-top: 12px;
+    font-weight: 900;
+    color: #111111;
+    margin-top: 14px;
+    letter-spacing: 0.5px;
 }
 
 .qr-description {
-    color: #667085;
+    color: #3a3d42;
     font-size: 14px;
     margin-top: 4px;
 }
@@ -133,18 +166,25 @@ div[data-testid="stForm"] {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #98a2b3;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 22px 0;
+    margin: 24px 0;
 }
 
 .divider::before,
 .divider::after {
     content: "";
     flex: 1;
-    height: 1px;
-    background-color: #d0d5dd;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c0c0c0, transparent);
+}
+
+.divider span {
+    background: linear-gradient(135deg, #ff6a00, #ffa53a);
+    color: #000000;
+    font-size: 13px;
+    font-weight: 900;
+    padding: 6px 14px;
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgba(255, 122, 0, 0.5);
 }
 
 
@@ -153,42 +193,76 @@ div[data-testid="stForm"] {
 .form-label {
     text-align: center;
     font-size: 16px;
-    font-weight: 700;
-    color: #344054;
+    font-weight: 800;
+    color: #111111;
     margin-bottom: 8px;
+}
+
+div[data-testid="stTextInput"] div[data-baseweb="input"],
+div[data-testid="stTextInput"] div[data-baseweb="base-input"] {
+    background-color: #ffffff !important;
+    border-color: #111111 !important;
+    border-radius: 12px !important;
+}
+
+div[data-testid="stTextInput"] div[data-baseweb="input"] {
+    border: 2px solid #111111 !important;
+}
+
+div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
+    border-color: #ff7a00 !important;
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.3);
 }
 
 div[data-testid="stTextInput"] input {
     font-size: 20px;
+    font-weight: 700;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 1px;
     padding: 14px;
-    border-radius: 10px;
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
+    background-color: #ffffff !important;
+    caret-color: #ff7a00;
 }
 
 div[data-testid="stTextInput"] input::placeholder {
     text-transform: none;
     letter-spacing: normal;
+    font-weight: 400;
+    color: #8e9196 !important;
+    -webkit-text-fill-color: #8e9196 !important;
 }
 
 div[data-testid="stFormSubmitButton"] button {
-    height: 52px;
+    height: 54px;
     width: 100%;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: 700;
-    background-color: #0460A9;
-    color: #ffffff;
-    border: none;
-    margin-top: 6px;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #ff5f00 0%, #ff9f1c 100%) !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    margin-top: 8px;
+    box-shadow: 0 6px 16px rgba(255, 106, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+div[data-testid="stFormSubmitButton"] button p {
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px;
 }
 
 div[data-testid="stFormSubmitButton"] button:hover,
 div[data-testid="stFormSubmitButton"] button:focus {
-    background-color: #034a83;
-    color: #ffffff;
-    border: none;
+    background: #000000 !important;
+    color: #ff9f1c !important;
+    border: 2px solid #ff7a00 !important;
+    transform: translateY(-1px);
+}
+
+div[data-testid="stFormSubmitButton"] button:active {
+    transform: translateY(1px);
 }
 
 
@@ -199,31 +273,32 @@ div[data-testid="stFormSubmitButton"] button:focus {
     padding: 28px 20px;
     border-radius: 18px;
     text-align: center;
+    color: #ffffff;
+    border: 2px solid #c0c0c0;
     animation: fadeIn 0.25s ease-out;
 }
 
 .result-card.ok {
-    background-color: #ecfdf3;
-    border: 3px solid #12b76a;
-    color: #067647;
+    background: linear-gradient(135deg, #064e2b 0%, #12b76a 100%);
+    box-shadow: 0 0 24px rgba(18, 183, 106, 0.5);
 }
 
 .result-card.bad {
-    background-color: #fef3f2;
-    border: 3px solid #f04438;
-    color: #b42318;
+    background: linear-gradient(135deg, #7a1010 0%, #f04438 100%);
+    box-shadow: 0 0 24px rgba(240, 68, 56, 0.5);
 }
 
 .result-icon {
-    font-size: 52px;
-    font-weight: 800;
+    font-size: 54px;
+    font-weight: 900;
     line-height: 1;
 }
 
 .result-title {
     font-size: 32px;
-    font-weight: 800;
+    font-weight: 900;
     margin-top: 10px;
+    letter-spacing: 1px;
 }
 
 .result-text {
@@ -232,9 +307,12 @@ div[data-testid="stFormSubmitButton"] button:focus {
 }
 
 .result-id {
+    display: inline-block;
     font-size: 14px;
-    margin-top: 10px;
-    opacity: 0.8;
+    margin-top: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0.35);
     font-family: monospace;
 }
 
@@ -248,9 +326,15 @@ div[data-testid="stFormSubmitButton"] button:focus {
 
 .footer-text {
     text-align: center;
-    color: #98a2b3;
+    color: #c0c4cc;
     font-size: 12px;
     margin-top: 36px;
+    letter-spacing: 0.5px;
+}
+
+.footer-text span {
+    color: #ff9f1c;
+    font-weight: 700;
 }
 
 
@@ -264,7 +348,7 @@ div[data-testid="stFormSubmitButton"] button:focus {
     }
 
     .main-title {
-        font-size: 28px;
+        font-size: 30px;
     }
 
     .result-title {
@@ -317,7 +401,7 @@ def load_data() -> pd.DataFrame:
 
 
 # ============================================================
-# GENERATE QR (as base64 for pixel-perfect centering)
+# GENERATE QR (base64 for exact centering)
 # ============================================================
 
 @st.cache_data
@@ -422,7 +506,7 @@ if not opened_from_qr:
         f'<div class="qr-title">SCAN TO CHECK IN</div>'
         f'<div class="qr-description">Use your phone camera to open the check-in page</div>'
         f'</div>'
-        f'<div class="divider">OR</div>',
+        f'<div class="divider"><span>OR</span></div>',
         unsafe_allow_html=True,
     )
 
@@ -440,7 +524,7 @@ with st.form("verification_form", clear_on_submit=False):
 
     employee_id = st.text_input(
         "521 ID",
-        placeholder="e.g. ABCDEFG01",
+        placeholder="e.g. DEVABSA7",
         max_chars=50,
         label_visibility="collapsed",
     )
@@ -485,6 +569,6 @@ if submitted:
 # ============================================================
 
 st.markdown(
-    '<div class="footer-text">Event Registration Verification</div>',
+    '<div class="footer-text">Event Registration <span>Verification</span></div>',
     unsafe_allow_html=True,
 )
