@@ -19,7 +19,7 @@ CSV_FILE = Path("employees.csv")
 
 # IMPORTANT:
 # Replace this with your actual deployed Streamlit URL
-APP_URL = "https://your-event-checkin.streamlit.app"
+APP_URL = "https://novartis-anuual-day.streamlit.app/"
 
 
 # =========================================================
