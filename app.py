@@ -4,9 +4,10 @@ import qrcode
 from io import BytesIO
 from pathlib import Path
 
-# =========================================================
-# CONFIGURATION
-# =========================================================
+
+# ============================================================
+# PAGE CONFIGURATION
+# ============================================================
 
 st.set_page_config(
     page_title="Event Check-In",
@@ -18,165 +19,282 @@ st.set_page_config(
 CSV_FILE = Path("employees.csv")
 
 # IMPORTANT:
-# Replace this with your actual deployed Streamlit URL
+# After deploying your Streamlit app,
+# replace this URL with your actual application URL.
 APP_URL = "https://novartis-anuual-day.streamlit.app/"
 
 
-# =========================================================
-# PAGE DESIGN
-# =========================================================
+# ============================================================
+# PAGE STYLE
+# ============================================================
 
 st.markdown(
     """
-    <style>
+<style>
 
-    #MainMenu {
-        visibility: hidden;
-    }
+/* Hide Streamlit default elements */
 
-    footer {
-        visibility: hidden;
-    }
+#MainMenu {
+    visibility: hidden;
+}
 
-    header {
-        visibility: hidden;
-    }
+footer {
+    visibility: hidden;
+}
 
-    .stApp {
-        background-color: #f5f7fb;
-    }
+header {
+    visibility: hidden;
+}
+
+
+/* Page */
+
+.stApp {
+    background-color: #f5f7fb;
+}
+
+.block-container {
+    max-width: 600px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+
+/* Main heading */
+
+.main-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 800;
+    color: #172033;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #667085;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
+/* QR */
+
+.qr-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: #344054;
+    margin-top: 10px;
+}
+
+.qr-description {
+    text-align: center;
+    color: #667085;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+
+/* OR */
+
+.or-text {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #98a2b3;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+
+/* Text input */
+
+div[data-testid="stTextInput"] input {
+
+    font-size: 20px;
+    text-align: center;
+
+    padding: 15px;
+
+    border-radius: 10px;
+}
+
+
+/* Verify button */
+
+div[data-testid="stFormSubmitButton"] button {
+
+    height: 55px;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    width: 100%;
+}
+
+
+/* ============================================================
+   ACCEPTED
+   ============================================================ */
+
+.accepted-card {
+
+    margin-top: 25px;
+
+    padding: 30px 20px;
+
+    border-radius: 18px;
+
+    background-color: #ecfdf3;
+
+    border: 3px solid #12b76a;
+
+    text-align: center;
+}
+
+
+.accepted-icon {
+
+    color: #12b76a;
+
+    font-size: 55px;
+
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+.accepted-title {
+
+    color: #067647;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    margin-top: 12px;
+}
+
+
+.accepted-text {
+
+    color: #067647;
+
+    font-size: 16px;
+
+    margin-top: 8px;
+}
+
+
+/* ============================================================
+   REJECTED
+   ============================================================ */
+
+.rejected-card {
+
+    margin-top: 25px;
+
+    padding: 30px 20px;
+
+    border-radius: 18px;
+
+    background-color: #fef3f2;
+
+    border: 3px solid #f04438;
+
+    text-align: center;
+}
+
+
+.rejected-icon {
+
+    color: #f04438;
+
+    font-size: 55px;
+
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+.rejected-title {
+
+    color: #b42318;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    margin-top: 12px;
+}
+
+
+.rejected-text {
+
+    color: #b42318;
+
+    font-size: 16px;
+
+    margin-top: 8px;
+}
+
+
+/* Footer */
+
+.footer-text {
+
+    text-align: center;
+
+    color: #98a2b3;
+
+    font-size: 12px;
+
+    margin-top: 40px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
 
     .block-container {
-        max-width: 550px;
-        padding-top: 2rem;
-        padding-bottom: 3rem;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 
     .main-title {
-        text-align: center;
-        font-size: 34px;
-        font-weight: 800;
-        color: #172033;
-        margin-bottom: 5px;
+        font-size: 30px;
     }
 
-    .subtitle {
-        text-align: center;
-        color: #667085;
-        font-size: 16px;
-        margin-bottom: 15px;
-    }
-
-    .qr-title {
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        color: #344054;
-        margin-top: 8px;
-        margin-bottom: 4px;
-    }
-
-    .qr-description {
-        text-align: center;
-        color: #667085;
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-
-    .or-text {
-        text-align: center;
-        font-size: 14px;
-        font-weight: 700;
-        color: #98a2b3;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-
-    div[data-testid="stTextInput"] input {
-        font-size: 18px;
-        text-align: center;
-        padding: 14px;
-        border-radius: 10px;
-    }
-
-    div[data-testid="stButton"] button {
-        height: 52px;
-        border-radius: 10px;
-        font-size: 17px;
-        font-weight: 700;
-    }
-
-    .accepted-card {
-        margin-top: 25px;
-        padding: 28px 20px;
-        border-radius: 16px;
-        background-color: #ecfdf3;
-        border: 2px solid #12b76a;
-        text-align: center;
-    }
-
-    .accepted-icon {
-        color: #12b76a;
-        font-size: 50px;
-        font-weight: 800;
-    }
-
-    .accepted-title {
-        color: #067647;
-        font-size: 32px;
-        font-weight: 800;
-        margin-top: 5px;
-    }
-
-    .accepted-text {
-        color: #067647;
-        font-size: 15px;
-        margin-top: 8px;
-    }
-
-    .rejected-card {
-        margin-top: 25px;
-        padding: 28px 20px;
-        border-radius: 16px;
-        background-color: #fef3f2;
-        border: 2px solid #f04438;
-        text-align: center;
-    }
-
-    .rejected-icon {
-        color: #f04438;
-        font-size: 50px;
-        font-weight: 800;
-    }
-
+    .accepted-title,
     .rejected-title {
-        color: #b42318;
-        font-size: 32px;
-        font-weight: 800;
-        margin-top: 5px;
+        font-size: 30px;
     }
 
-    .rejected-text {
-        color: #b42318;
-        font-size: 15px;
-        margin-top: 8px;
-    }
+}
 
-    </style>
-    """,
+</style>
+""",
     unsafe_allow_html=True
 )
 
 
-# =========================================================
-# LOAD EMPLOYEE DATA
-# =========================================================
+# ============================================================
+# LOAD CSV
+# ============================================================
 
 @st.cache_data(ttl=60)
 def load_data():
 
     if not CSV_FILE.exists():
-        raise FileNotFoundError("employees.csv not found.")
+        raise FileNotFoundError("employees.csv not found")
 
     df = pd.read_csv(
         CSV_FILE,
@@ -196,12 +314,14 @@ def load_data():
     missing_columns = required_columns - set(df.columns)
 
     if missing_columns:
+
         raise ValueError(
-            "Missing required column(s): "
+            "Missing column(s): "
             + ", ".join(sorted(missing_columns))
         )
 
-    # Clean ID values
+    # Normalize data
+
     df["521_ID"] = (
         df["521_ID"]
         .astype(str)
@@ -209,7 +329,6 @@ def load_data():
         .str.upper()
     )
 
-    # Clean registration values
     df["Registered"] = (
         df["Registered"]
         .astype(str)
@@ -217,7 +336,6 @@ def load_data():
         .str.upper()
     )
 
-    # Clean employee type values
     df["Type"] = (
         df["Type"]
         .astype(str)
@@ -225,10 +343,14 @@ def load_data():
         .str.upper()
     )
 
-    # Remove rows that do not contain an ID
-    df = df[df["521_ID"] != ""]
+    # Remove empty IDs
 
-    # Remove duplicate IDs
+    df = df[
+        df["521_ID"] != ""
+    ]
+
+    # Remove duplicates
+
     df = df.drop_duplicates(
         subset=["521_ID"],
         keep="first"
@@ -237,9 +359,9 @@ def load_data():
     return df
 
 
-# =========================================================
-# GENERATE QR CODE
-# =========================================================
+# ============================================================
+# GENERATE QR
+# ============================================================
 
 @st.cache_data
 def generate_qr(url):
@@ -252,7 +374,10 @@ def generate_qr(url):
     )
 
     qr.add_data(url)
-    qr.make(fit=True)
+
+    qr.make(
+        fit=True
+    )
 
     image = qr.make_image(
         fill_color="black",
@@ -271,61 +396,43 @@ def generate_qr(url):
     return buffer.getvalue()
 
 
-# =========================================================
-# RESULT FUNCTIONS
-# =========================================================
+# ============================================================
+# ACCEPTED RESULT
+# IMPORTANT:
+# HTML is intentionally NOT indented.
+# ============================================================
 
 def show_accepted():
 
     st.markdown(
-        """
-        <div class="accepted-card">
-
-            <div class="accepted-icon">
-                ✓
-            </div>
-
-            <div class="accepted-title">
-                ACCEPTED
-            </div>
-
-            <div class="accepted-text">
-                Your registration has been successfully verified.
-            </div>
-
-        </div>
-        """,
+        """<div class="accepted-card">
+<div class="accepted-icon">✓</div>
+<div class="accepted-title">ACCEPTED</div>
+<div class="accepted-text">Your registration has been successfully verified.</div>
+</div>""",
         unsafe_allow_html=True
     )
 
+
+# ============================================================
+# REJECTED RESULT
+# ============================================================
 
 def show_rejected():
 
     st.markdown(
-        """
-        <div class="rejected-card">
-
-            <div class="rejected-icon">
-                ✕
-            </div>
-
-            <div class="rejected-title">
-                REJECTED
-            </div>
-
-            <div class="rejected-text">
-                Your registration could not be verified.
-            </div>
-
-        </div>
-        """,
+        """<div class="rejected-card">
+<div class="rejected-icon">✕</div>
+<div class="rejected-title">REJECTED</div>
+<div class="rejected-text">Your registration could not be verified.</div>
+</div>""",
         unsafe_allow_html=True
     )
 
 
-# =========================================================
-# LOAD DATABASE
-# =========================================================
+# ============================================================
+# LOAD EMPLOYEE DATABASE
+# ============================================================
 
 try:
 
@@ -334,11 +441,11 @@ try:
 except FileNotFoundError:
 
     st.error(
-        "Employee database is currently unavailable. "
-        "Please contact the event administrator."
+        "Employee database is currently unavailable."
     )
 
     st.stop()
+
 
 except ValueError as error:
 
@@ -347,6 +454,7 @@ except ValueError as error:
     )
 
     st.stop()
+
 
 except Exception:
 
@@ -358,35 +466,30 @@ except Exception:
     st.stop()
 
 
-# =========================================================
+# ============================================================
 # PAGE HEADER
-# =========================================================
+# ============================================================
 
 st.markdown(
-    """
-    <div class="main-title">
-        EVENT CHECK-IN
-    </div>
-
-    <div class="subtitle">
-        Scan the QR code or enter your 521 ID
-    </div>
-    """,
+    """<div class="main-title">EVENT CHECK-IN</div>
+<div class="subtitle">Scan the QR code or enter your 521 ID</div>""",
     unsafe_allow_html=True
 )
 
 
-# =========================================================
+# ============================================================
 # QR CODE
-# =========================================================
+# ============================================================
 
-qr_image = generate_qr(APP_URL)
-
-col1, col2, col3 = st.columns(
-    [1, 1.5, 1]
+qr_image = generate_qr(
+    APP_URL
 )
 
-with col2:
+left, center, right = st.columns(
+    [1.2, 1.6, 1.2]
+)
+
+with center:
 
     st.image(
         qr_image,
@@ -395,36 +498,25 @@ with col2:
 
 
 st.markdown(
-    """
-    <div class="qr-title">
-        SCAN TO CHECK IN
-    </div>
-
-    <div class="qr-description">
-        Scan using your phone camera to open the check-in page
-    </div>
-    """,
+    """<div class="qr-title">SCAN TO CHECK IN</div>
+<div class="qr-description">Scan using your phone camera to open the check-in page</div>""",
     unsafe_allow_html=True
 )
 
 
-# =========================================================
-# DIVIDER
-# =========================================================
+# ============================================================
+# OR
+# ============================================================
 
 st.markdown(
-    """
-    <div class="or-text">
-        ───────── OR ─────────
-    </div>
-    """,
+    """<div class="or-text">──────── OR ────────</div>""",
     unsafe_allow_html=True
 )
 
 
-# =========================================================
-# CHECK-IN FORM
-# =========================================================
+# ============================================================
+# FORM
+# ============================================================
 
 with st.form(
     "verification_form",
@@ -443,15 +535,19 @@ with st.form(
     )
 
 
-# =========================================================
-# VALIDATION
-# =========================================================
+# ============================================================
+# VERIFICATION
+# ============================================================
 
 if submitted:
 
+    # Clean employee input
     entered_id = employee_id.strip().upper()
 
-    # Empty input
+    # --------------------------------------------
+    # EMPTY
+    # --------------------------------------------
+
     if not entered_id:
 
         st.warning(
@@ -460,35 +556,53 @@ if submitted:
 
     else:
 
-        # Search employee
+        # ----------------------------------------
+        # FIND 521 ID
+        # ----------------------------------------
+
         match = df.loc[
             df["521_ID"] == entered_id
         ]
 
-        # ID does not exist
+        # ----------------------------------------
+        # ID NOT FOUND
+        # ----------------------------------------
+
         if match.empty:
 
             show_rejected()
 
         else:
 
+            # ------------------------------------
+            # GET EMPLOYEE RECORD
+            # ------------------------------------
+
             employee = match.iloc[0]
 
             registered = employee["Registered"]
+
             employee_type = employee["Type"]
 
-            # -------------------------------------------------
-            # ACCEPTANCE RULE
-            # -------------------------------------------------
+
+            # ------------------------------------
+            # ELIGIBILITY RULE
+            #
+            # ID must exist
+            # Registered = YES
+            # Type = INTERNAL
+            # ------------------------------------
 
             is_eligible = (
                 registered == "YES"
-                and employee_type == "INTERNAL"
+                and
+                employee_type == "INTERNAL"
             )
 
-            # -------------------------------------------------
-            # RESULT
-            # -------------------------------------------------
+
+            # ------------------------------------
+            # SHOW RESULT
+            # ------------------------------------
 
             if is_eligible:
 
@@ -499,21 +613,11 @@ if submitted:
                 show_rejected()
 
 
-# =========================================================
+# ============================================================
 # FOOTER
-# =========================================================
+# ============================================================
 
 st.markdown(
-    """
-    <br><br>
-
-    <p style="
-        text-align:center;
-        color:#98a2b3;
-        font-size:12px;
-    ">
-        Event Registration Verification
-    </p>
-    """,
+    """<div class="footer-text">Event Registration Verification</div>""",
     unsafe_allow_html=True
 )
