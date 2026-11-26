@@ -13,7 +13,7 @@ import streamlit as st
 # ============================================================
 
 st.set_page_config(
-    page_title="Event Check-In",
+    page_title="Annual Day Event Check-In",
     page_icon="✅",
     layout="centered",
     initial_sidebar_state="collapsed",
@@ -486,7 +486,7 @@ subtitle = (
 )
 
 st.markdown(
-    f'<div class="main-title">EVENT CHECK-IN</div>'
+    f'<div class="main-title">ANNUAL DAY EVENT CHECK-IN</div>'
     f'<div class="subtitle">{subtitle}</div>',
     unsafe_allow_html=True,
 )
