@@ -440,7 +440,7 @@ with st.form("verification_form", clear_on_submit=False):
 
     employee_id = st.text_input(
         "521 ID",
-        placeholder="e.g. DEVABSA1",
+        placeholder="e.g. "ABCDEFG01",
         max_chars=50,
         label_visibility="collapsed",
     )
