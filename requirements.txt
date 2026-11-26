@@ -1,3 +1,4 @@
-streamlit
 pandas
 qrcode
+streamlit>=1.30
+qrcode[pil]
