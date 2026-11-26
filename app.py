@@ -90,7 +90,7 @@ div[data-testid="InputInstructions"] {
 
 .main-title {
     text-align: center;
-    font-size: 36px;
+    font-size: 34px;
     font-weight: 900;
     letter-spacing: 1px;
     margin-bottom: 6px;
