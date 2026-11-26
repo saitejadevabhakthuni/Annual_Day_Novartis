@@ -41,6 +41,12 @@ st.markdown(
     """
 <style>
 
+/* ============================================================
+   PREMIUM EVENT CHECK-IN UI
+   Theme: Classic Black, Silver, Orange Gold
+   ============================================================ */
+
+
 /* ---------- Hide Streamlit default elements ---------- */
 
 #MainMenu,
@@ -54,35 +60,46 @@ div[data-testid="InputInstructions"] {
 }
 
 
-/* ---------- Page background: black -> silver ---------- */
+/* ---------- Global page background ---------- */
 
 .stApp {
-    background: linear-gradient(
-        160deg,
-        #000000 0%,
-        #141414 35%,
-        #2b2d31 65%,
-        #8e9196 100%
-    ) !important;
+    background:
+        radial-gradient(circle at top left, rgba(255, 122, 0, 0.22), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(210, 214, 220, 0.20), transparent 30%),
+        linear-gradient(145deg, #050505 0%, #111111 38%, #24272c 72%, #8a8d93 100%) !important;
     background-attachment: fixed !important;
+    color: #ffffff;
 }
 
-/* Orange accent bar at the top */
+
+/* ---------- Premium top accent ---------- */
+
 .stApp::before {
     content: "";
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: 6px;
-    background: linear-gradient(90deg, #ff5f00, #ff9f1c, #ffd089, #ff9f1c, #ff5f00);
-    z-index: 1000;
+    height: 7px;
+    background: linear-gradient(
+        90deg,
+        #ff5f00,
+        #ff9f1c,
+        #ffd089,
+        #ff9f1c,
+        #ff5f00
+    );
+    z-index: 9999;
+    box-shadow: 0 0 22px rgba(255, 139, 24, 0.65);
 }
 
+
+/* ---------- Page container ---------- */
+
 .block-container {
-    max-width: 520px;
-    padding-top: 2.5rem;
-    padding-bottom: 2rem;
+    max-width: 560px;
+    padding-top: 3rem;
+    padding-bottom: 2.5rem;
 }
 
 
@@ -90,137 +107,181 @@ div[data-testid="InputInstructions"] {
 
 .main-title {
     text-align: center;
-    font-size: 34px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-    background: linear-gradient(90deg, #ff6a00, #ffb347);
+    font-size: 36px;
+    font-weight: 950;
+    letter-spacing: 1.4px;
+    line-height: 1.15;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #ffffff 0%, #ffb347 45%, #ff6a00 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-shadow: 0 10px 30px rgba(255, 122, 0, 0.20);
 }
 
 .subtitle {
     text-align: center;
-    color: #c0c4cc;
-    font-size: 16px;
-    margin-bottom: 24px;
+    color: #d4d7dc;
+    font-size: 15.5px;
+    font-weight: 500;
+    margin-bottom: 28px;
+    letter-spacing: 0.3px;
 }
 
 
-/* ---------- Shared silver card (QR card + form) ---------- */
+/* ---------- Shared premium card ---------- */
 
 .qr-card,
 div[data-testid="stForm"] {
-    background: linear-gradient(
-        145deg,
-        #f4f5f7 0%,
-        #dcdfe4 50%,
-        #b9bdc4 100%
-    ) !important;
-    border: 2px solid #ff7a00 !important;
-    border-radius: 20px !important;
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(215, 219, 225, 0.96)),
+        linear-gradient(145deg, #f7f8fa, #c7cbd3) !important;
+    border: 1.8px solid rgba(255, 154, 36, 0.95) !important;
+    border-radius: 26px !important;
     box-shadow:
-        0 8px 24px rgba(255, 122, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    padding: 24px !important;
+        0 18px 45px rgba(0, 0, 0, 0.38),
+        0 8px 30px rgba(255, 122, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    padding: 28px !important;
+}
+
+.qr-card::before,
+div[data-testid="stForm"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255, 255, 255, 0.45),
+            transparent 35%,
+            transparent 70%,
+            rgba(255, 154, 36, 0.18)
+        );
+    pointer-events: none;
 }
 
 
-/* ---------- QR ---------- */
+/* ---------- QR Card ---------- */
 
 .qr-card {
     text-align: center;
+    animation: cardIn 0.35s ease-out;
 }
 
 .qr-card img {
-    width: 200px;
-    max-width: 70%;
+    width: 210px;
+    max-width: 72%;
     height: auto;
     display: block;
     margin: 0 auto;
-    padding: 10px;
+    padding: 12px;
     background-color: #ffffff;
-    border: 3px solid #111111;
-    border-radius: 14px;
+    border: 4px solid #111111;
+    border-radius: 18px;
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.28),
+        0 0 0 6px rgba(255, 122, 0, 0.12);
 }
 
 .qr-title {
-    font-size: 18px;
-    font-weight: 900;
+    font-size: 19px;
+    font-weight: 950;
     color: #111111;
-    margin-top: 14px;
-    letter-spacing: 0.5px;
+    margin-top: 18px;
+    letter-spacing: 0.8px;
 }
 
 .qr-description {
-    color: #3a3d42;
+    color: #4b4f56;
     font-size: 14px;
-    margin-top: 4px;
+    font-weight: 500;
+    margin-top: 6px;
 }
 
 
-/* ---------- OR divider ---------- */
+/* ---------- Divider ---------- */
 
 .divider {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 24px 0;
+    gap: 14px;
+    margin: 28px 0;
 }
 
 .divider::before,
 .divider::after {
     content: "";
     flex: 1;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #c0c0c0, transparent);
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
 }
 
 .divider span {
-    background: linear-gradient(135deg, #ff6a00, #ffa53a);
-    color: #000000;
+    background: linear-gradient(135deg, #ff6a00, #ffb347);
+    color: #080808;
     font-size: 13px;
-    font-weight: 900;
-    padding: 6px 14px;
+    font-weight: 950;
+    padding: 7px 18px;
     border-radius: 999px;
-    box-shadow: 0 0 12px rgba(255, 122, 0, 0.5);
+    letter-spacing: 1px;
+    box-shadow:
+        0 0 18px rgba(255, 122, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 
 /* ---------- Form ---------- */
 
+div[data-testid="stForm"] {
+    animation: cardIn 0.35s ease-out;
+}
+
 .form-label {
     text-align: center;
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 17px;
+    font-weight: 900;
     color: #111111;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+}
+
+
+/* Text input wrapper */
+
+div[data-testid="stTextInput"] {
+    margin-top: 4px;
 }
 
 div[data-testid="stTextInput"] div[data-baseweb="input"],
 div[data-testid="stTextInput"] div[data-baseweb="base-input"] {
     background-color: #ffffff !important;
-    border-color: #111111 !important;
-    border-radius: 12px !important;
+    border-radius: 16px !important;
 }
 
 div[data-testid="stTextInput"] div[data-baseweb="input"] {
     border: 2px solid #111111 !important;
+    box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.08),
+        0 8px 18px rgba(0, 0, 0, 0.10);
 }
 
 div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
     border-color: #ff7a00 !important;
-    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.3);
+    box-shadow:
+        0 0 0 4px rgba(255, 122, 0, 0.25),
+        0 10px 22px rgba(255, 122, 0, 0.16);
 }
 
 div[data-testid="stTextInput"] input {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 21px;
+    font-weight: 850;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 14px;
+    letter-spacing: 1.5px;
+    padding: 16px 14px;
     color: #111111 !important;
     -webkit-text-fill-color: #111111 !important;
     background-color: #ffffff !important;
@@ -230,35 +291,43 @@ div[data-testid="stTextInput"] input {
 div[data-testid="stTextInput"] input::placeholder {
     text-transform: none;
     letter-spacing: normal;
-    font-weight: 400;
-    color: #8e9196 !important;
-    -webkit-text-fill-color: #8e9196 !important;
+    font-weight: 450;
+    color: #9a9da4 !important;
+    -webkit-text-fill-color: #9a9da4 !important;
 }
 
+
+/* Submit button */
+
 div[data-testid="stFormSubmitButton"] button {
-    height: 54px;
+    height: 58px;
     width: 100%;
-    border-radius: 12px !important;
-    background: linear-gradient(135deg, #ff5f00 0%, #ff9f1c 100%) !important;
-    color: #000000 !important;
-    border: 2px solid #000000 !important;
-    margin-top: 8px;
-    box-shadow: 0 6px 16px rgba(255, 106, 0, 0.4);
-    transition: all 0.2s ease;
+    border-radius: 16px !important;
+    background: linear-gradient(135deg, #ff5f00 0%, #ff9f1c 50%, #ffd089 100%) !important;
+    color: #050505 !important;
+    border: 2px solid #050505 !important;
+    margin-top: 12px;
+    box-shadow:
+        0 12px 26px rgba(255, 106, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.48);
+    transition: all 0.18s ease;
 }
 
 div[data-testid="stFormSubmitButton"] button p {
     font-size: 18px !important;
-    font-weight: 900 !important;
-    letter-spacing: 1px;
+    font-weight: 950 !important;
+    letter-spacing: 1.4px;
 }
 
 div[data-testid="stFormSubmitButton"] button:hover,
 div[data-testid="stFormSubmitButton"] button:focus {
-    background: #000000 !important;
-    color: #ff9f1c !important;
-    border: 2px solid #ff7a00 !important;
-    transform: translateY(-1px);
+    background: linear-gradient(135deg, #080808, #1b1b1b) !important;
+    color: #ffb347 !important;
+    border: 2px solid #ff8a00 !important;
+    transform: translateY(-2px);
+    box-shadow:
+        0 16px 32px rgba(255, 106, 0, 0.36),
+        0 0 0 4px rgba(255, 122, 0, 0.18);
 }
 
 div[data-testid="stFormSubmitButton"] button:active {
@@ -266,59 +335,100 @@ div[data-testid="stFormSubmitButton"] button:active {
 }
 
 
+/* ---------- Alerts ---------- */
+
+div[data-testid="stAlert"] {
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 154, 36, 0.55) !important;
+}
+
+
 /* ---------- Result cards ---------- */
 
 .result-card {
-    margin-top: 24px;
-    padding: 28px 20px;
-    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 28px;
+    padding: 32px 22px;
+    border-radius: 24px;
     text-align: center;
     color: #ffffff;
-    border: 2px solid #c0c0c0;
-    animation: fadeIn 0.25s ease-out;
+    animation: resultIn 0.35s ease-out;
+}
+
+.result-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.25), transparent 35%),
+        linear-gradient(120deg, rgba(255, 255, 255, 0.14), transparent 55%);
+    pointer-events: none;
 }
 
 .result-card.ok {
-    background: linear-gradient(135deg, #064e2b 0%, #12b76a 100%);
-    box-shadow: 0 0 24px rgba(18, 183, 106, 0.5);
+    background: linear-gradient(135deg, #043d24 0%, #079455 48%, #12b76a 100%);
+    border: 2px solid rgba(182, 255, 215, 0.85);
+    box-shadow:
+        0 18px 42px rgba(18, 183, 106, 0.36),
+        0 0 0 5px rgba(18, 183, 106, 0.12);
 }
 
 .result-card.bad {
-    background: linear-gradient(135deg, #7a1010 0%, #f04438 100%);
-    box-shadow: 0 0 24px rgba(240, 68, 56, 0.5);
+    background: linear-gradient(135deg, #610909 0%, #c81e1e 52%, #f04438 100%);
+    border: 2px solid rgba(255, 202, 202, 0.85);
+    box-shadow:
+        0 18px 42px rgba(240, 68, 56, 0.36),
+        0 0 0 5px rgba(240, 68, 56, 0.12);
 }
 
 .result-icon {
-    font-size: 54px;
-    font-weight: 900;
+    position: relative;
+    z-index: 1;
+    width: 76px;
+    height: 76px;
+    margin: 0 auto;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 46px;
+    font-weight: 950;
     line-height: 1;
+    background: rgba(0, 0, 0, 0.22);
+    border: 2px solid rgba(255, 255, 255, 0.65);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 .result-title {
-    font-size: 32px;
-    font-weight: 900;
-    margin-top: 10px;
-    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+    font-size: 34px;
+    font-weight: 950;
+    margin-top: 16px;
+    letter-spacing: 1.4px;
 }
 
 .result-text {
+    position: relative;
+    z-index: 1;
     font-size: 16px;
-    margin-top: 6px;
+    margin-top: 8px;
+    font-weight: 500;
 }
 
 .result-id {
+    position: relative;
+    z-index: 1;
     display: inline-block;
     font-size: 14px;
-    margin-top: 12px;
-    padding: 4px 12px;
+    margin-top: 16px;
+    padding: 6px 14px;
     border-radius: 999px;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(0, 0, 0, 0.34);
+    border: 1px solid rgba(255, 255, 255, 0.26);
     font-family: monospace;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: none; }
+    letter-spacing: 0.5px;
 }
 
 
@@ -326,15 +436,41 @@ div[data-testid="stFormSubmitButton"] button:active {
 
 .footer-text {
     text-align: center;
-    color: #c0c4cc;
+    color: #d2d5da;
     font-size: 12px;
-    margin-top: 36px;
-    letter-spacing: 0.5px;
+    margin-top: 38px;
+    letter-spacing: 0.7px;
+    opacity: 0.95;
 }
 
 .footer-text span {
-    color: #ff9f1c;
-    font-weight: 700;
+    color: #ffb347;
+    font-weight: 850;
+}
+
+
+/* ---------- Animations ---------- */
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes resultIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 
@@ -345,14 +481,46 @@ div[data-testid="stFormSubmitButton"] button:active {
     .block-container {
         padding-left: 16px;
         padding-right: 16px;
+        padding-top: 2.4rem;
     }
 
     .main-title {
-        font-size: 30px;
+        font-size: 29px;
+        letter-spacing: 0.7px;
+    }
+
+    .subtitle {
+        font-size: 14.5px;
+        margin-bottom: 22px;
+    }
+
+    .qr-card,
+    div[data-testid="stForm"] {
+        border-radius: 22px !important;
+        padding: 22px !important;
+    }
+
+    .qr-card img {
+        width: 190px;
+    }
+
+    div[data-testid="stTextInput"] input {
+        font-size: 19px;
+        padding: 14px 12px;
+    }
+
+    div[data-testid="stFormSubmitButton"] button {
+        height: 56px;
     }
 
     .result-title {
-        font-size: 28px;
+        font-size: 29px;
+    }
+
+    .result-icon {
+        width: 68px;
+        height: 68px;
+        font-size: 40px;
     }
 }
 
@@ -360,7 +528,6 @@ div[data-testid="stFormSubmitButton"] button:active {
 """,
     unsafe_allow_html=True,
 )
-
 
 # ============================================================
 # LOAD CSV
