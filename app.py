@@ -8,7 +8,7 @@ st.set_page_config(
 
 CSV_FILE = "employees.csv"
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_data():
     df = pd.read_csv(CSV_FILE, dtype=str)
 
@@ -24,17 +24,18 @@ df = load_data()
 
 st.markdown(
     """
-    <h1 style='text-align:center;'>EVENT CHECK-IN</h1>
+    <h1 style="text-align:center;">EVENT CHECK-IN</h1>
+    <p style="text-align:center;">Enter your 521 ID to verify check-in status</p>
     """,
     unsafe_allow_html=True
 )
 
 employee_id = st.text_input(
     "Enter 521 ID",
-    placeholder="Enter 521 ID"
+    placeholder="Example: DEVABSA7"
 )
 
-if st.button("VERIFY"):
+if st.button("VERIFY", use_container_width=True):
     entered_id = employee_id.strip().upper()
 
     if entered_id == "":
@@ -49,7 +50,7 @@ if st.button("VERIFY"):
             if registered == "YES" and employee_type == "INTERNAL":
                 st.markdown(
                     """
-                    <h1 style='text-align:center; color:green;'>
+                    <h1 style="text-align:center; color:green;">
                     ACCEPTED
                     </h1>
                     """,
@@ -58,7 +59,7 @@ if st.button("VERIFY"):
             else:
                 st.markdown(
                     """
-                    <h1 style='text-align:center; color:red;'>
+                    <h1 style="text-align:center; color:red;">
                     REJECTED
                     </h1>
                     """,
@@ -67,7 +68,7 @@ if st.button("VERIFY"):
         else:
             st.markdown(
                 """
-                <h1 style='text-align:center; color:red;'>
+                <h1 style="text-align:center; color:red;">
                 REJECTED
                 </h1>
                 """,
